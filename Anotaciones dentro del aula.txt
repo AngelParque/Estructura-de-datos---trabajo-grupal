@@ -1,0 +1,11 @@
+Semana 10 - avance 1 25% - todos deben de venir. Solo presentar y hara preguntas. 
+Interpretar el problema. 
+capitulo 1: Analasis del problema (explicar brevemente lo que se busca resolver con el sistema segun el caso) 
+requerimientos funcionales y no funcionales, 3. struct, lista, while, to, etc, segun el caso que se realizo. por ejemplo 
+quiero validad la edad, cuantos son, etc. tengo que hacer la validación justificando. 
+CAPITULO 4: utilizar GitHub. diagramas tambien si se hace subir al github, subir todo a Github, de cada uno se va a registrar 
+en el github. Si nos reunimos por meet, whatsApp etc todo eso las evidencias, se va a poder el historial 
+Participación: Evidencia de cada uno (tiene que subirse). Acceso edition a la profesora. tiene que ponerme un cronograma con 
+fechas limites. Separarnos y decir quien lo realizo tal y tal. Tomar capturas todos los participantes.  
+
+Traer la otra semana las evidencias. Solo subira uno por grupo. Despues exposicion.
