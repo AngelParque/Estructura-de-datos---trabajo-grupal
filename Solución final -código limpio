@@ -1,0 +1,171 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Estructura que simula el nodo de un proceso (Lista enlazada)
+struct Proceso {
+    int id;
+    string nombre;
+    int prioridad;
+    int memoria;
+    Proceso* siguiente; // Puntero al siguiente nodo
+};
+
+// Variables globales para la simulación
+Proceso* cabeza = NULL; // Cabeza de la lista de procesos
+
+// Función para simular el Algoritmo "AgregarProceso"
+void agregarProceso() {
+    int id, prioridad, memoria;
+    string nombre;
+    bool lista_vacia;
+
+    cout << "\n=== REGISTRAR NUEVO PROCESO ===" << endl;
+
+    // Validación del ID (Solo números positivos)
+    cout << "Ingrese el ID del proceso (Solo numeros positivos): ";
+    cin >> id;
+    while (id <= 0) {
+        cout << "Error. El ID debe ser mayor a 0. Intente de nuevo: ";
+        cin >> id;
+    }
+
+    cout << "Ingrese el nombre del proceso (ej: chrome.exe): ";
+    cin.ignore(); // Limpiar el búfer del teclado
+    getline(cin, nombre);
+
+    // Validación de la prioridad
+    cout << "Ingrese la prioridad (1 = Alta, 2 = Media, 3 = Baja): ";
+    cin >> prioridad;
+    while (prioridad < 1 || prioridad > 3) {
+        cout << "Prioridad invalida. Ingrese 1, 2 o 3: ";
+        cin >> prioridad;
+    }
+
+    cout << "Ingrese la memoria requerida en MB: ";
+    cin >> memoria;
+
+    cout << "Almacenando datos en el nuevo nodo..." << endl;
+
+    // Crear el nuevo nodo en memoria
+    Proceso* nuevoProceso = new Proceso();
+    nuevoProceso->id = id;
+    nuevoProceso->nombre = nombre;
+    nuevoProceso->prioridad = prioridad;
+    nuevoProceso->memoria = memoria;
+    nuevoProceso->siguiente = NULL;
+
+    // Lógica para verificar si la lista está vacía
+    if (cabeza == NULL) {
+        lista_vacia = true;
+    } else {
+        lista_vacia = false;
+    }
+
+    if (lista_vacia) {
+        cabeza = nuevoProceso;
+        cout << "La lista estaba vacia. El proceso " << nombre << " ahora es la cabeza de la lista." << endl;
+    } else {
+        cout << "Recorriendo punteros con bucle Mientras hasta llegar al nodo final..." << endl;
+        Proceso* aux = cabeza;
+        while (aux->siguiente != NULL) {
+            aux = aux->siguiente;
+        }
+        aux->siguiente = nuevoProceso;
+        cout << "Proceso " << nombre << " enlazado correctamente al final de la lista." << endl;
+    }
+
+    cout << "¡Proceso registrado con exito!" << endl;
+}
+
+// Función para simular el Algoritmo "CambiarEstadoProceso"
+void cambiarEstadoProceso() {
+    int idBuscar, nuevaPrioridad;
+    bool encontrado = false;
+
+    cout << "\n=== CAMBIAR ESTADO / MODIFICAR PRIORIDAD ===" << endl;
+    cout << "Ingrese el ID del proceso que desea buscar: ";
+    cin >> idBuscar;
+
+    cout << "Recorriendo la lista de procesos..." << endl;
+
+    // Bucle de búsqueda iterativa sobre la lista real
+    Proceso* aux = cabeza;
+    while (aux != NULL) {
+        if (aux->id == idBuscar) {
+            encontrado = true;
+            cout << "¡Proceso localizado! Nombre: " << aux->nombre << " | Prioridad actual: " << aux->prioridad << endl;
+
+            // Solicitar nueva prioridad
+            cout << "Ingrese la nueva prioridad para el proceso (1 al 3): ";
+            cin >> nuevaPrioridad;
+            while (nuevaPrioridad < 1 || nuevaPrioridad > 3) {
+                cout << "Error. Ingrese una prioridad valida (1, 2 o 3): ";
+                cin >> nuevaPrioridad;
+            }
+
+            // Cambio de estado
+            aux->prioridad = nuevaPrioridad;
+            cout << "Estado actualizado. El proceso " << aux->nombre << " ahora tiene prioridad: " << aux->prioridad << endl;
+            break; // Salimos del bucle al encontrarlo
+        } else {
+            cout << "Buscando en los siguientes nodos..." << endl;
+        }
+        aux = aux->siguiente;
+    }
+
+    // Si terminó de recorrer y no lo encontró
+    if (!encontrado) {
+        cout << "Error: El ID " << idBuscar << " no existe en el registro actual." << endl;
+    }
+}
+
+// Función auxiliar para mostrar los procesos actuales
+void mostrarProcesos() {
+    if (cabeza == NULL) {
+        cout << "\nNo hay procesos registrados en el sistema." << endl;
+        return;
+    }
+    cout << "\n=== LISTA DE PROCESOS ACTUALES ===" << endl;
+    Proceso* aux = cabeza;
+    while (aux != NULL) {
+        cout << "[ID: " << aux->id << " | Nombre: " << aux->nombre 
+             << " | Prioridad: " << aux->prioridad << " | Memoria: " << aux->memoria << "MB] -> ";
+        aux = aux->siguiente;
+    }
+    cout << "NULL" << endl;
+}
+
+// Menú principal del programa
+int main() {
+    int opcion;
+    do {
+        cout << "\n--- SIMULADOR DE GESTION DE PROCESOS ---";
+        cout << "\n1. Registrar nuevo proceso";
+        cout << "\n2. Cambiar estado/prioridad de un proceso";
+        cout << "\n3. Ver lista de procesos";
+        cout << "\n4. Salir";
+        cout << "\nSeleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                agregarProceso();
+                break;
+            case 2:
+                cambiarEstadoProceso();
+                break;
+            case 3:
+                mostrarProcesos();
+                break;
+            case 4:
+                cout << "Saliendo del programa..." << endl;
+                break;
+            default:
+                cout << "Opcion invalida. Intente de nuevo." << endl;
+        }
+    } while (opcion != 4);
+
+    return 0;
+}
